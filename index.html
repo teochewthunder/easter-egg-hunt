@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Easter Egg Hunt</title>
+
+		<style>
+			div {outline: 0px solid #FF0000;}
+
+			body
+			{
+				font-size: 12px;
+				font-family: verdana;
+			}
+
+			.container
+			{
+				width: 800px;
+				height: 600px;
+				padding: 5px;
+				margin: 10px auto 0 auto;
+				outline: 3px solid rgba(255, 255, 0, 1);
+				background: url(bg.jpg) center center no-repeat;
+				background-size: cover;
+			}
+
+			.top
+			{
+				width: 800px;
+				height: 100px;
+				float: left;
+				color: rgba(255, 255, 0, 0.8);
+				text-align: center;
+			}
+
+			.top h1
+			{
+				font-size: 3em;
+				font-weight: bold;
+			}
+
+			button
+			{
+				background-color: rgba(255, 255, 0, 1);
+				color: rgba(255, 255, 255, 1);
+				width: 3em;
+				padding: 0.2em;
+				border-radius: 5px;
+				border: 0px solid red;
+				display: inline-block;
+				margin: 0 0 0.5em 1em;
+			}
+
+			button:hover
+			{
+				background-color: rgba(255, 255, 0, 0.5);
+				color: rgba(0, 0, 0, 1);
+			}
+
+			.main
+			{
+				width: 800px;
+				height: 495px;
+				margin-top: 5px;
+				float: left;
+			}
+
+			.sidebar
+			{
+				width: 200px;
+				height: 495px;
+				float: left;
+				color: rgba(0, 0, 0, 1);
+			}
+
+			.section
+			{
+				width: 595px;
+				height: 495px;
+				margin-left: 5px;
+				float: left;
+			}
+
+			.message
+			{
+				width: 80%;
+				padding: 1em;
+				margin: 0 auto 0 auto;
+				background-color: rgba(0, 0, 0, 0.5);
+				color: rgba(255, 0, 0, 1);
+				border-radius: 5px;
+				text-align: center;
+			}
+
+			.content
+			{
+				width: 585px;
+				height: 270px;
+				overflow: auto;
+				float: left;
+				background-color: rgba(0, 0, 0, 0.7);
+				color: rgba(255, 255, 255, 1);
+				padding: 5px;
+			}
+
+			.choices
+			{
+				width: 585px;
+				height: 200px;
+				margin-top: 5px;
+				float: left;
+				text-align: right;
+				background-color: rgba(0, 0, 0, 0.7);
+				color: rgba(255, 255, 255, 1);
+				padding: 5px;
+			}
+		</style>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="sections.js"></script>
+		<script>
+			let game = {
+				"timeLeft" : 0,
+				"eggs" : 0,
+				"visited" : [],
+				"gotoSection" : function(sectionName, mins, eggs) {
+					if (sectionName == "begin") game.visited = []; 
+
+					var section = sections[sectionName];
+					var messages = section.messages;
+
+					game.modifyTime(mins);
+					game.modifyEggs(eggs);
+
+					if (section.flag) game.visited.push(sectionName);
+
+					var content = section.content;
+					var choices = JSON.parse(JSON.stringify(section.choices));
+
+					var visitedChecks = section.visitedChecks;
+					if (visitedChecks != null)
+					{
+						for (let i = 0; i < visitedChecks.length; i++) 
+						{
+							if (game.hasVisited(visitedChecks[i].section)) 
+							{
+								if (visitedChecks[i].choices != null) choices.push(visitedChecks[i].choices);
+								if (visitedChecks[i].content != null) content += visitedChecks[i].content;
+							}
+							else
+							{
+								if (visitedChecks[i].choicesElse != null) choices.push(visitedChecks[i].choicesElse);
+								if (visitedChecks[i].contentElse != null) content += visitedChecks[i].contentElse;			
+							}
+						}						
+					}
+
+					game.showContent(content, messages);
+					game.showChoices(choices);
+				},
+				"showChoices" : function(links) {
+					var gameOver = false;
+					$(".choices").html("");
+
+					var div = $("<div></div>");
+
+					//check time
+					if (game.timeLeft == 0) 
+					{
+						gameOver = true;
+
+						var div = $("<div></div>");
+						var button = $("<button>Go</button>");
+						div.html("You have run out of time!");
+						div.append(button);
+						$(".choices").append(div);
+
+						button.click(()=> {
+							game.gotoSection("timeout", 0, null);
+						});	
+					}
+
+					//check inv
+					if (game.eggs >= 30) 
+					{
+						gameOver = true;
+
+						var div = $("<div></div>");
+						var button = $("<button>Go</button>");
+						div.html("Restart");
+						div.append(button);
+						$(".choices").append(div);
+
+						button.click(()=> {
+							game.gotoSection("victory", 0, null);
+						});	
+					}
+
+					//show choices
+					if (!gameOver)
+					{
+						for (let i = 0; i < links.length; i++) 
+						{
+							if (links[i] != null)
+							{
+								var div = $("<div></div>");
+								var button = $("<button>Go</button>");
+								div.html(links[i].text);
+								div.append(button);
+								$(".choices").append(div);
+
+								button.click(()=> {
+									game.gotoSection(links[i].section, links[i].time, links[i].eggs);
+								});								
+							}
+						}
+
+						//show replay or quit
+						var div = $("<div></div>");
+						var button = $("<button>Go</button>");
+						div.html("Restart");
+						div.append(button);
+						$(".choices").append(div);
+
+						button.click(()=> {
+							game.gotoSection("begin", 60, 0);
+						});						
+					}
+				},
+				"showContent" : function(content, messages) {
+					//check time
+					$(".timeleft").html(game.timeLeft + " minutes");
+
+					var invStr = "Eggs x " + game.eggs + "<br />";
+					if (game.hasVisited("porch1")) invStr += "Cat x 1<br />";
+					if (game.hasVisited("porch3")) invStr += "Shed key x 1<br />";
+					if (game.hasVisited("shed2")) invStr += "Bolt cutters x 1<br />";
+					$(".inventory").html(invStr);
+
+					//show content
+					$(".content").html(content);
+
+					if (messages.length > 0)
+					{
+						var div = $("<div class='message'></div>");
+						var messageStr = "";
+
+						for (let i = 0; i < messages.length; i++)
+						{
+							messageStr += (messages[i] + "<br />");
+						}
+
+						div.html(messageStr);
+						$(".content").append(div);						
+					}
+				},
+				"modifyTime" : function(mins) {
+					if (mins > 0) game.timeLeft = mins;
+					if (mins < 0) 
+					{
+						game.timeLeft += mins;
+
+						if (game.timeLeft < 0) game.timeLeft = 0;
+					}
+				},
+				"modifyEggs" : function(qty) {
+					if (qty != null)
+					{ 
+						if (qty == 0) 
+						{
+							game.eggs = 0;
+						} 
+						else
+						{
+							game.eggs += qty;
+
+							if (game.eggs < 0) game.eggs = 0;	
+						}
+					}
+				},
+				"hasVisited" : function(sectionName) {
+					console.log(sectionName,game.visited.indexOf(sectionName) != -1);
+					return (game.visited.indexOf(sectionName) != -1);
+				}
+			}
+
+			$( document ).ready(function() 
+			{
+			    game.gotoSection("begin", 60, 0);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="top">
+				<p><i>TeochewThunder</i> presents</p>
+				<h1>Easter Egg Hunt</h1>
+			</div>
+
+			<div class="main">
+				<div class="sidebar">
+					<h2>Time Left</h2>
+					<div class="timeleft">
+
+					</div>
+
+					<h2>Inventory</h2>
+					<div class="inventory">
+
+					</div>
+				</div>
+
+				<div class="section">
+					<div class="content">
+
+					</div>
+
+					<div class="choices">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
