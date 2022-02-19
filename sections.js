@@ -9,14 +9,14 @@ let sections = {
 		]
 	},
 	"timeout" : {
-		"content" : "<p>Time ut!!1</p>",
+		"content" : "<p>The Easter Bunny appears. &quot;<b>Well, looks like your time is up! Better luck next Easter!</b>&quot;</p>",
 		"flag" : false,
 		"visitedChecks" : null,
 		"messages" : [],
 		"choices" : []
 	},
 	"victory" : {
-		"content" : "<p>Victory!!1</p>",
+		"content" : "<p>The Easter Bunny appears, looking impressed. &quot;<b>Well, looks like you managed to complete the Easter Egg Hunt! That is great work!</b>&quot;</p>",
 		"flag" : false,
 		"visitedChecks" : null,
 		"messages" : [],
@@ -382,12 +382,12 @@ let sections = {
 		"visitedChecks" : [
 			{ "section": "neighbour_ladder", "content" : null, "choices": null, "contentElse" : "<p>You see a stepladder leaning against his fence. Mr Cheong probably won't mind if you borrow it for a few minutes.</p>", "choicesElse" : null },
 			{ "section": "road_nicole", "content" : null, "choices": null, "contentElse" : "<p>You see the girl next door, Nicole. She looks like she is trying to hail a cab.</p>", "choicesElse" : { "time" : -1, "eggs" : null, "section" : "road_nicole", "text" : "Approach Nicole"} },
-			{ "section": "road_mrlee", "content" : null, "choices": null, "contentElse" : "<p>An old man is trying to cross the road. That is Mr Lee, and he is a <i>very</i> slow walker.</p>", "choicesElse" : { "time" : -5, "eggs" : null, "section" : "road_mrlee", "text" : "Help Mr Lee cross"} }
+			{ "section": "road_blindman", "content" : null, "choices": null, "contentElse" : "<p>An old man is trying to cross the road. That is Mr Balakrishnan, and he is a <i>very</i> slow walker.</p>", "choicesElse" : { "time" : -5, "eggs" : 1, "section" : "road_blindman", "text" : "Help Mr Balakrishnan cross"} }
 		],
 		"messages" : [],
 		"choices" : [
 			{ "time" : -5, "eggs" : -5, "section" : "road_dash", "text" : "Make a dash for it"},
-			{ "time" : -2, "eggs" : null, "section" : "road_slow", "text" : "Look both ways, then cross"},
+			{ "time" : -2, "eggs" : null, "section" : "road_slow", "text" : "Look both ways, then cross"}
 		]
 	},
 	"road_dash" : {
@@ -400,7 +400,7 @@ let sections = {
 		]
 	},	
 	"road_slow" : {
-		"content" : "<p>You were always taught to take care when crosing the road. It takes an extra minute, but you make it across.</p>",
+		"content" : "<p>You were always taught to take care when crossing the road. It takes an extra minute, but you make it across.</p>",
 		"flag" : false,
 		"visitedChecks" : null,
 		"messages" : [],
@@ -408,34 +408,33 @@ let sections = {
 			{ "time" : 1, "eggs" : null, "section" : "neighbour", "text" : "Next"}
 		]
 	},	
-	"road2" : {
-		"content" : "xxxxx",
-		"flag" : false,
-		"visitedChecks" : null,
+	"road_nicole" : {
+		"content" : "<p>Nicole sees you and smiles brightly.</p>",
+		"flag" : true,
+		"visitedChecks" : [
+			{ "section": "porch_kuching", "content" : "<p>&quot;<b>Oh, so cute!</b>&quot; Nicole squeals when she sees Kuching in your arms. Nicole loves cats. She strokes Kuching, then rummages in her handbag. &quot;<b>Here, I found this! You can have it.</b>&quot; It turns out to be a brightly-colored Easter egg!</p>", "choices": { "time" : -1, "eggs" : 1, "section" : "road_nicole_egg", "text" : "Accept the egg"}, "contentElse" : null, "choicesElse" : null },
+		],
 		"messages" : [],
 		"choices" : [
-			{ "time" : 1, "eggs" : null, "section" : "", "text" : "test1"},
-			{ "time" : 1, "eggs" : null, "section" : "", "text" : "test2"},
+			{ "time" : -1, "eggs" : null, "section" : "road", "text" : "Back to the gate"}
 		]
 	},
-	"road3" : {
-		"content" : "xxxxx",
-		"flag" : false,
+	"road_blindman" : {
+		"content" : "<p>You offer to help Mr Balakrishnan cross the road. It takes a few minutes. After you are on the other side, he thanks you and pauses. &quot;<b>Someone gave me this. You're a good kid, take it!</b>&quot; It's a single Easter egg. You accept and thank him.</p>",
+		"flag" : true,
 		"visitedChecks" : null,
-		"messages" : [],
+		"messages" : ["Egg added to inventory."],
 		"choices" : [
-			{ "time" : 1, "eggs" : null, "section" : "", "text" : "test1"},
-			{ "time" : 1, "eggs" : null, "section" : "", "text" : "test2"},
+			{ "time" : 1, "eggs" : null, "section" : "neighbour", "text" : "Next"}
 		]
 	},
-	"road4" : {
-		"content" : "xxxxx",
+	"road_nicole_egg" : {
+		"content" : "<p>You accept the egg and thank Nicole.</p>",
 		"flag" : false,
 		"visitedChecks" : null,
-		"messages" : [],
+		"messages" : ["Egg added to inventory."],
 		"choices" : [
-			{ "time" : 1, "eggs" : null, "section" : "", "text" : "test1"},
-			{ "time" : 1, "eggs" : null, "section" : "", "text" : "test2"},
+			{ "time" : -1, "eggs" : null, "section" : "road", "text" : "Back to the gate"}
 		]
 	},
 }
