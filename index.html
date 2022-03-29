@@ -38,6 +38,12 @@
 				font-weight: bold;
 			}
 
+			p img
+			{
+				display: block;
+				margin: 0 auto 0 auto;
+			}
+
 			button
 			{
 				background-color: rgba(255, 255, 0, 1);
@@ -79,7 +85,7 @@
 				margin-left: 5px;
 				float: left;
 			}
-
+		
 			.message
 			{
 				width: 80%;
@@ -122,7 +128,8 @@
 				"timeLeft" : 0,
 				"eggs" : 0,
 				"visited" : [],
-				"gotoSection" : function(sectionName, mins, eggs) {
+				"gotoSection" : function(sectionName, mins, eggs) 
+				{
 					if (sectionName == "begin") game.visited = []; 
 
 					var section = sections[sectionName];
@@ -155,16 +162,14 @@
 					}
 
 					game.showContent(content, messages);
-					game.showChoices(choices);
+					game.showChoices(sectionName, choices);
 				},
-				"showChoices" : function(links) {
+				"showChoices" : function(sectionName, links) 
+				{
 					var gameOver = false;
 					$(".choices").html("");
 
-					var div = $("<div></div>");
-
-					//check time
-					if (game.timeLeft == 0) 
+					if (game.timeLeft == 0 && sectionName != "timeout") 
 					{
 						gameOver = true;
 
@@ -179,14 +184,13 @@
 						});	
 					}
 
-					//check inv
-					if (game.eggs >= 30) 
+					if (game.eggs >= 30 && sectionName != "victory") 
 					{
 						gameOver = true;
 
 						var div = $("<div></div>");
 						var button = $("<button>Go</button>");
-						div.html("Congrats! You have completed the Eatser Egg Hunt!");
+						div.html("Congrats! You have completed the Easter Egg Hunt!");
 						div.append(button);
 						$(".choices").append(div);
 
@@ -195,13 +199,12 @@
 						});	
 					}
 
-					//show choices
 					if (!gameOver)
 					{
 						for (let i = 0; i < links.length; i++) 
 						{
-							if (links[i] != null)
-							{
+							//if (links[i] != null)
+							//{
 								var div = $("<div></div>");
 								var button = $("<button>Go</button>");
 								div.html(links[i].text);
@@ -211,32 +214,32 @@
 								button.click(()=> {
 									game.gotoSection(links[i].section, links[i].time, links[i].eggs);
 								});								
-							}
+							//}
 						}
-
-						//show replay or quit
-						var div = $("<div></div>");
-						var button = $("<button>Go</button>");
-						div.html("Restart");
-						div.append(button);
-						$(".choices").append(div);
-
-						button.click(()=> {
-							game.gotoSection("begin", 120, 0);
-						});						
 					}
+
+					var div = $("<div></div>");
+					var button = $("<button>Go</button>");
+					div.html("Restart");
+					div.append(button);
+					$(".choices").append(div);
+
+					button.click(()=> {
+						game.gotoSection("begin", 120, 0);
+					});						
 				},
-				"showContent" : function(content, messages) {
-					//check time
+				"showContent" : function(content, messages) 
+				{
 					$(".timeleft").html(game.timeLeft + " minutes");
 
 					var invStr = "Eggs x " + game.eggs + "<br />";
-					if (game.hasVisited("porch1")) invStr += "Cat x 1<br />";
-					if (game.hasVisited("porch3")) invStr += "Shed key x 1<br />";
-					if (game.hasVisited("shed2")) invStr += "Bolt cutters x 1<br />";
+					//if (game.hasVisited("testGetMercedes")) invStr += "Mercedes x 1<br />";
+					if (game.hasVisited("porch_kuching")) invStr += "Cat x 1<br />";
+					if (game.hasVisited("porch_shedkey")) invStr += "Shed key x 1<br />";
+					if (game.hasVisited("shed_boltcutters")) invStr += "Bolt cutters x 1<br />";
+					if (game.hasVisited("neighbor_ladder")) invStr += "Ladder x 1<br />";
 					$(".inventory").html(invStr);
 
-					//show content
 					$(".content").html(content);
 
 					if (messages.length > 0)
@@ -253,7 +256,8 @@
 						$(".content").append(div);						
 					}
 				},
-				"modifyTime" : function(mins) {
+				"modifyTime" : function(mins) 
+				{
 					if (mins > 0) game.timeLeft = mins;
 					if (mins < 0) 
 					{
@@ -262,7 +266,8 @@
 						if (game.timeLeft < 0) game.timeLeft = 0;
 					}
 				},
-				"modifyEggs" : function(qty) {
+				"modifyEggs" : function(qty) 
+				{
 					if (qty != null)
 					{ 
 						if (qty == 0) 
@@ -278,10 +283,9 @@
 					}
 				},
 				"hasVisited" : function(sectionName) {
-					console.log(sectionName,game.visited.indexOf(sectionName) != -1);
 					return (game.visited.indexOf(sectionName) != -1);
 				}
-			}
+			};
 
 			$( document ).ready(function() 
 			{
