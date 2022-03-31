@@ -13,7 +13,7 @@ let sections =
 	},
 	"timeout" : 
 	{
-		"content" : "<p>The Easter Bunny appears. &quot;<b>Well, looks like your time is up! Better luck next Easter!</b>&quot;</p>",
+		"content" : "<p>The Easter Bunny appears. &quot;<b>Well, looks like your time is up! Better luck next Easter!</b>&quot;</p><p><img src='img_easterbunny.jpg'></p>",
 		"flag" : false,
 		"visitedChecks" : null,
 		"messages" : [],
@@ -21,7 +21,7 @@ let sections =
 	},
 	"victory" : 
 	{
-		"content" : "<p>The Easter Bunny appears, looking impressed. &quot;<b>Well, looks like you managed to complete the Easter Egg Hunt! That is great work!</b>&quot;</p>",
+		"content" : "<p>The Easter Bunny appears, looking impressed. &quot;<b>Well, looks like you managed to complete the Easter Egg Hunt! That is great work!</b>&quot;</p><p><img src='img_easterbunny.jpg'></p>",
 		"flag" : false,
 		"visitedChecks" : null,
 		"messages" : [],
@@ -370,7 +370,7 @@ let sections =
 		"flag" : false,
 		"visitedChecks" : 
 		[
-			{ "section": "garden_eggs", "content" : "<p>The Easter Bunny gave you a clue. The number of days Jesus took to return from the dead, was three. The third floorboard of the shed from the door looks loose to you.</p>", "choices": { "time" : -1, "eggs" : null, "section" : "shed_floorboard", "text" : "Pry open the flsoorboard"}, "contentElse" : null, "choicesElse" : null },
+			{ "section": "garden_eggs", "content" : "<p>The Easter Bunny gave you a clue. The number of days Jesus took to return from the dead, was three. The third floorboard of the shed from the door looks loose to you.</p>", "choices": { "time" : -1, "eggs" : null, "section" : "shed_floorboard", "text" : "Pry open the floorboard"}, "contentElse" : null, "choicesElse" : null },
 			{ "section": "shed_boltcutters", "content" : "<p>The bolt cutters are conspicuously missing from the tool rack.</p>", "choices": null, "contentElse" : "<p>The bolt cutters on the tool rack could be useful.</p>", "choicesElse" : { "time" : -1, "eggs" : null, "section" : "shed_boltcutters", "text" : "Grab the bolt cutters"} }
 		],
 		"messages" : [],
@@ -434,7 +434,7 @@ let sections =
 		"messages" : [],
 		"choices" : 
 		[
-			{ "time" : -1, "eggs" : 3, "section" : "shed_eggs", "text" : "Collect the eggs"},
+			{ "time" : -1, "eggs" : 3, "section" : "shed_eggs", "text" : "Collect the eggs"}
 		]
 	},
 	"shed_rat_boltcutters" : 
@@ -445,7 +445,7 @@ let sections =
 		"messages" : [],
 		"choices" : 
 		[
-			{ "time" : -1, "eggs" : 5, "section" : "shed_eggs", "text" : "Collect the eggs"},
+			{ "time" : -1, "eggs" : 5, "section" : "shed_eggs", "text" : "Collect the eggs"}
 		]
 	},	
 	"shed_eggs" : 
