@@ -9,20 +9,27 @@ A *Choose Your Own Adventure* style game where the player has to accumulate 30 e
 - a div with class of `choices` to display the `choices` array from any given section, along with any extra content.
 
 ## Properties
-- `eggs`: an integer which represents the number of eggs collected. Cannot go below 0.
-- `timeLeft`: an integer that represents minutes left. Cannot go below 0.
-- `visited`: an array of strings that is updated when certain sections are visited. Referenced when additional HTML content or choices need to be displayed, and whenever inventory needs to be determined.
+- `eggs` : an integer which represents the number of eggs collected. Cannot go below 0.
+- `timeLeft` : an integer that represents minutes left. Cannot go below 0.
+- `visited` : an array of strings that is updated when certain sections are visited. Referenced when additional HTML content or choices need to be displayed, and whenever inventory needs to be determined.
 
 ## Methods
-- `gotoSection()`: 
-- `showChoices()`:
-- `showContent()`:
-- `modifyTime()`:
-- `modifyEggs()`:
-- `hasVisited()`:
+- `gotoSection()` : 
+- `showChoices()` :
+- `showContent()` :
+- `modifyTime()` :
+- `modifyEggs()` :
+- `hasVisited()` :
 
 ## Sections (in `sections.js`)
 This is an array containing objects. Each of these has the following properties.
-- xxx
-- xxx
-- xxx
+- `content` :
+- `flag` :
+- `visitedChecks` :
+- `messages` :
+- `choices` :
+  - `section` :
+  - `content` :
+  - `contentElse` :
+  - `choices` :
+  - `choicesElse` :
