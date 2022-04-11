@@ -41,7 +41,7 @@ This is an array containing objects. Each of these has the following properties.
   - `contentElse` : Extra HTML to display if `false`. Can be `null`.
   - `choices` : Extra `choice` objects if `true`. Can be `null`.
   - `choicesElse` : Extra `choice` objects if `false`. Can be `null`.
-- `messages` :
+- `messages` : An array of strings.
 - `choices` : An array of objects.
   - `time` : Integer to modify `timeLeft` property by.
   - `eggs` : Integer to modify `eggs` property by. Can be `null`.
