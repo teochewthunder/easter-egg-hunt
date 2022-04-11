@@ -15,6 +15,9 @@ A *Choose Your Own Adventure* style game where the player has to accumulate 30 e
 
 ## Methods
 - `gotoSection()` : 
+1. Calls `modifyTime()` and `modifyEggs()`.
+2. Grabs the required section, processes extra HTML content and choices based on the section's `visitedChecks` array.
+3. Calls `showChoices` and `showContent()`.
 - `showChoices()` :
 - `showContent()` :
 - `modifyTime()` :
