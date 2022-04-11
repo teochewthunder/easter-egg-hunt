@@ -16,23 +16,34 @@ A *Choose Your Own Adventure* style game where the player has to accumulate 30 e
 ## Methods
 - `gotoSection()` : 
 1. Calls `modifyTime()` and `modifyEggs()`.
-2. Grabs the required section, processes extra HTML content and choices based on the section's `visitedChecks` array.
-3. Calls `showChoices` and `showContent()`.
-- `showChoices()` :
+2. If `flag` property of the section is `true`, add secton name to the `visited` array.
+3. Grabs the required section, processes extra HTML content and choices based on the section's `visitedChecks` array.
+4. Calls `showChoices` and `showContent()`.
+- `showChoices()` : 
+5. If it's an end-game scenario, only show links to the timeut or victory scenario. Otherwise...
+6. Goes through the `links` array and displays buttons (and clikable events) for them.
+7. Adds Restart button to interface.
 - `showContent()` :
-- `modifyTime()` :
-- `modifyEggs()` :
-- `hasVisited()` :
+8. Display HTML content.
+9. Dispay inventory based on `hasVisited()` checks.
+10. Display messages, if any.
+- `modifyTime()` : Sets `timeLeft` if value is positive, otherwise, deduct from `timeLeft` property.
+- `modifyEggs()` : Sets `eggs` if value is 0, otherwise, add to `eggs` property.
+- `hasVisited()` : Checks the `visited` array to see if a particular section name is in it. Returns `true` or `false`.
 
 ## Sections (in `sections.js`)
 This is an array containing objects. Each of these has the following properties.
-- `content` :
-- `flag` :
-- `visitedChecks` :
+- `content` : HTML content for the section.
+- `flag` : Boolean value that determines if a section needs to be "flagged" once visited.
+- `visitedChecks` : An array of objects.
+  - `section` : Section name to check via the `hasVisited()` method.
+  - `content` : Extra HTML to display if `true`. Can be `null`.
+  - `contentElse` : Extra HTML to display if `false`. Can be `null`.
+  - `choices` : Extra `choice` objects if `true`. Can be `null`.
+  - `choicesElse` : Extra `choice` objects if `false`. Can be `null`.
 - `messages` :
-- `choices` :
-  - `section` :
-  - `content` :
-  - `contentElse` :
-  - `choices` :
-  - `choicesElse` :
+- `choices` : An array of objects.
+  - `time` : Integer to modify `timeLeft` property by.
+  - `eggs` : Integer to modify `eggs` property by. Can be `null`.
+  - `section` : Section name that the choice will lead to.
+  - `text` : Text for the choice.
